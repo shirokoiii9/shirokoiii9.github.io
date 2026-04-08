@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>羽汐的二次元记录 | 白蓝手账</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background-color: #ffffff;  /* 纯白基底 */
+            background-image: 
+                linear-gradient(90deg, rgba(91, 207, 250, 0.12) 1px, transparent 1px),
+                linear-gradient(rgba(91, 207, 250, 0.12) 1px, transparent 1px);
+            background-size: 32px 32px;
+            min-height: 100vh;
+            color: #1a4b6e;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+        
+        /* 导航栏 - 白蓝风格 */
+        nav {
+            background: #ffffff;
+            padding: 14px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 48px;
+            box-shadow: 0 8px 20px rgba(91, 207, 250, 0.12);
+            border: 1px solid #caeefc;
+            backdrop-filter: blur(2px);
+        }
+        
+        nav a {
+            color: #5bcffa;
+            text-decoration: none;
+            margin: 0 22px;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: all 0.25s ease;
+            letter-spacing: 1px;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: #258fbb;
+            transform: translateY(-2px);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: #5bcffa;
+            transition: 0.25s;
+            border-radius: 4px;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* 标题区域 白蓝渐变 */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(125deg, #ffffff 0%, #e2f5ff 100%);
+            border-radius: 42px;
+            margin-bottom: 32px;
+            box-shadow: 0 12px 24px rgba(91, 207, 250, 0.12);
+            border: 1px solid rgba(91, 207, 250, 0.5);
+        }
+        
+        .header h1 {
+            font-size: 2.3em;
+            color: #1f6e93;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-shadow: 1px 1px 0 rgba(91, 207, 250, 0.2);
+        }
+        
+        .header p {
+            color: #3c8db0;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+        
+        /* 卡片通用样式 */
+        .card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 24px 28px;
+            margin-bottom: 28px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(91, 207, 250, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .card:hover {
+            box-shadow: 0 18px 32px rgba(91, 207, 250, 0.12), 0 0 0 1px #5bcffa;
+        }
+        
+        .card-title {
+            font-size: 1.55em;
+            color: #1f6e93;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 3px dashed #aae0fc;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 650;
+        }
+        
+        /* 统计卡片 双栏布局 (删除了吃谷金额) */
+        .stats-row {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .stat-item {
+            background: #f6fdff;
+            padding: 18px 12px;
+            border-radius: 24px;
+            text-align: center;
+            flex: 1;
+            min-width: 140px;
+            border: 1px solid #caeefc;
+            transition: all 0.2s;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-4px);
+            background: #ffffff;
+            border-color: #5bcffa;
+            box-shadow: 0 12px 18px rgba(91, 207, 250, 0.12);
+        }
+        
+        .stat-number {
+            font-size: 2.6em;
+            color: #5bcffa;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: 2px;
+        }
+        
+        .stat-label {
+            color: #4b7a96;
+            font-size: 0.95em;
+            font-weight: 500;
+            margin-top: 8px;
+        }
+        
+        /* 吃谷记录条目 */
+        .record-entry {
+            background: #fefeff;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border-left: 6px solid #5bcffa;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+            border: 1px solid #e9f5fc;
+            border-left-width: 6px;
+        }
+        
+        .record-entry:hover {
+            transform: translateX(5px);
+            box-shadow: 0 12px 20px rgba(91, 207, 250, 0.12);
+            background: #ffffff;
+            border-color: #caeefc;
+            border-left-color: #3ab4e0;
+        }
+        
+        .record-date {
+            color: #7ca9c2;
+            font-size: 0.85em;
+            margin-bottom: 8px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+        
+        .record-title {
+            font-size: 1.3em;
+            color: #145c7a;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        
+        .record-content {
+            color: #2c5a73;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+        
+        /* 图片网格 */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin-top: 12px;
+        }
+        
+        .image-grid img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 2px solid #d2edfc;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: #f3faff;
+        }
+        
+        .image-grid img:hover {
+            transform: scale(1.02);
+            border-color: #5bcffa;
+            box-shadow: 0 12px 20px rgba(91, 207, 250, 0.25);
+        }
+        
+        /* 单张大图 */
+        .single-image {
+            max-width: 100%;
+            border-radius: 20px;
+            border: 2px solid #caeefc;
+            margin-top: 12px;
+            transition: 0.2s;
+        }
+        
+        .single-image:hover {
+            border-color: #5bcffa;
+            box-shadow: 0 8px 18px rgba(91, 207, 250, 0.2);
+        }
+        
+        /* 标签 */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+        
+        .tag {
+            background: #e4f4fe;
+            color: #14709b;
+            padding: 5px 14px;
+            border-radius: 40px;
+            font-size: 0.8em;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            transition: 0.2s;
+            border: 0.5px solid #bde1f5;
+        }
+        
+        .tag:hover {
+            background: #5bcffa;
+            color: white;
+            border-color: #5bcffa;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 32px 20px 28px;
+            color: #4682a8;
+            font-size: 0.9em;
+            border-top: 1px solid #d7edf9;
+            margin-top: 20px;
+        }
+        
+        .footer .heart {
+            color: #5bcffa;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            display: inline-block;
+            font-size: 1.1em;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        /* 添加按钮 蓝白风格 */
+        .add-btn {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 60px;
+            height: 60px;
+            background: #5bcffa;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.1em;
+            box-shadow: 0 8px 20px rgba(91, 207, 250, 0.5);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            text-decoration: none;
+            font-weight: 300;
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+        
+        .add-btn:hover {
+            transform: scale(1.08) rotate(4deg);
+            background: #3aaed9;
+            box-shadow: 0 10px 28px rgba(91, 207, 250, 0.7);
+        }
+        
+        /* 响应式微调 */
+        @media (max-width: 600px) {
+            body {
+                padding: 14px;
+            }
+            .card {
+                padding: 18px;
+            }
+            .stat-number {
+                font-size: 2em;
+            }
+            nav a {
+                margin: 0 12px;
+                font-size: 0.95rem;
+            }
+            .header h1 {
+                font-size: 1.7rem;
+            }
+            .card-title {
+                font-size: 1.3rem;
+            }
+        }
+        
+        /* 辅助白色蓝色细节 */
+        a, .tag, .stat-item, .record-entry, .card {
+            transition: all 0.2s;
+        }
+        
+        ::selection {
+            background: #5bcffa;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 清爽导航栏 -->
+        <nav>
+            <a href="index.html">🏠 首页</a>
+            <a href="diary.html">📖 日常</a>
+            <a href="anime.html">🎀 二次元</a>
+        </nav>
+        
+        <!-- 白蓝主题头部 -->
+        <div class="header">
+            <h1>🌊 羽汐的二次元记录 🌊</h1>
+            <p>吃谷 | 逛店 | 追番 | 游戏日常 · 白蓝手账风</p>
+        </div>
+        
+        <!-- 统计卡片：已删除“吃谷金额”栏，只保留逛店次数 & 新谷子数量 -->
+        <div class="card">
+            <div class="card-title">📊 本月记录</div>
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">✨ 逛店次数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">🍬 新谷子</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 吃谷记录区域 -->
+        <div class="card">
+            <div class="card-title">🛍️ 吃谷手账 · 今日份喜悦</div>
+            
+            <!-- 记录1 逛谷店 -->
+            <div class="record-entry">
+                <div class="record-date">2026-04-06 14:30 🌟</div>
+                <div class="record-title">🎀 谷店偶遇晓山瑞希吧唧！</div>
+                <div class="record-content">
+                    今天去了新开的一家谷子店，感觉像是中谷，又像是快闪，氛围超级好！买到了晓山瑞希的吧唧✨ 
+                    其实我前两天就已经买过一次但是被我搞丢了啊啊啊于是跑了很远又来买，已经快乐一整天啦 qwq
+                </div>
+                <!-- 图片网格示例 -->
+                <div class="image-grid">
+                    <img src="images/guzi1.jpg" alt="晓山瑞希吧唧" onerror="this.style.display='none'">
+                </div>
+                <div class="tags">
+                    <span class="tag">#PJSK</span>
+                    <span class="tag">#晓山瑞希</span>
+                </div>
+            </div>
+            
+            <!-- 记录2 网购开箱 -->
+            <div class="record-entry">
+                <div class="record-date">2026-04-02 16:00 📦</div>
+                <div class="record-title">🎤 买了个黑色的初音未来联名痛包</div>
+                <div class="record-content">
+                    其实我纠结洛天依的白色款和初音未来黑色款，后来还是选黑色...希望耐脏一点...白子包不也是黑色的嘛qwq
+                </div>
+                <img src="images/express.jpg" alt="黑色书包" class="single-image" onerror="this.style.display='none'">
+                <div class="tags">
+                    <span class="tag">#PJSK</span>
+                    <span class="tag">#初音ミク</span>
+                    <span class="tag">#痛包</span>
+                    <span class="tag">#选择困难症</span>
+                </div>
+            </div>
+            
+            <!-- 追加一条新的谷子记录，展示更多白蓝色调内容 -->
+            <div class="record-entry">
+                <div class="record-date">2026-04-07 11:20 🎐</div>
+                <div class="record-title">📖 B站吃谷机单抽出奇迹！！</div>
+                <div class="record-content">
+                    因为担心自己厨力不够所以跑去了B站抽吧唧～ 
+                    抽到了瑞希的心形碎闪，和真冬的罗森联动吧唧但是为什么这个要11月发货啊啊啊啊啊！
+                </div>
+                <div class="image-grid">
+                    <img src="images/bocchi.jpg" alt="瑞希心形碎闪" onerror="this.style.display='none'">
+                </div>
+                <div class="tags">
+                    <span class="tag">#PJSK</span>
+                    <span class="tag">#晓山瑞希</span>
+                    <span class="tag">#朝比奈真冬</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 追番记录 + 二次元日常 -->
+        <div class="card">
+            <div class="card-title">📺 追番放映室</div>
+            <div class="record-entry">
+                <div class="record-title">🎸《孤独摇滚》三刷中</div>
+                <div class="record-content">
+                    每一遍都有新感动！小波奇从阴角到live的成长太耀眼了✨ 我要尽快练习电吉他啦，希望能早日cover！
+                </div>
+                <div class="tags">
+                    <span class="tag">#孤独摇滚</span>
+                    <span class="tag">#波奇酱</span>
+                    <span class="tag">#电吉他</span>
+                </div>
+            </div>
+            
+            <div class="record-entry">
+                <div class="record-title">🌙 补番《蔚蓝档案The Animation》</div>
+                <div class="record-content">
+                    我果然还是喜欢白子/星野/Yuuka！！
+                </div>
+                <div class="tags">
+                    <span class="tag">#蔚蓝档案</span>
+                    <span class="tag">#BA</span>
+                    <span class="tag">#补番推荐</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 逛店/游戏小记 增加蓝白氛围 -->
+        <div class="card">
+            <div class="card-title">🎮 游戏日常 & 逛店plog</div>
+            <div class="record-entry">
+                <div class="record-date">2026-04-03 19:40 🎮</div>
+                <div class="record-title">蔚蓝档案 · 白子活动刷爆</div>
+                <div class="record-content">
+                    为了白子的限定卡池攒了一井，终于出货了！战术对抗赛也打上了新排名，双倍的快乐～ 
+                    最近还看了BA的剧场版，对阿比多斯更加热爱。
+                </div>
+                <div class="tags">
+                    <span class="tag">#蔚蓝档案</span>
+                    <span class="tag">#砂狼白子</span>
+                    <span class="tag">#碧蓝档案</span>
+                    <span class="tag">#游戏记录</span>
+                </div>
+            </div>
+            <div class="record-entry">
+                <div class="record-date">2026-03-31 13:00 🏙️</div>
+                <div class="record-title">周末元力场大冒险</div>
+                <div class="record-content">
+                    元力场的店真的太有氛围了！看到了新专区和好多稀有谷子，虽然钱包在哭泣但是抱回了一个优香小玩偶～
+                    PS：白子要是在我就把你俩都带走qwq!
+                </div>
+                <div class="image-grid">
+                    <img src="images/set.jpg" alt="优香玩偶" onerror="this.style.display='none'">
+                </div>
+                <div class="tags">
+                    <span class="tag">#animate</span>
+                    <span class="tag">#二次元逛街</span>
+                    <span class="tag">#线下吃谷</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 页脚 白蓝小清新 -->
+        <div class="footer">
+            <p>吃谷使人贫穷但快乐 <span class="heart">💙</span> 今日も蓝白好心情</p>
+            <p style="margin-top: 10px; font-size: 0.8em;">羽汐的二次元空间 · 白蓝手账版 © 2026</p>
+        </div>
+    </div>
+    
+    <!-- 装饰添加按钮（符合蓝白风格） -->
+    <a href="#" class="add-btn" title="记录新吃谷日常 (纯装饰)">+</a>
+</body>
+</html>
