@@ -2,136 +2,348 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>羽汐的日常动态</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>羽汐 · 日常动态 | 蓝白小窝</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
+            /* 主色调：5bcffa 蓝色 + ffffff 白色 */
+            background: linear-gradient(145deg, #5bcffa 0%, #ffffff 100%);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #333;
-            line-height: 1.6;
+            color: #1f2f3a;
+            line-height: 1.5;
             padding: 20px;
         }
-        
+
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
         }
-        
-        nav {
-            background: rgba(255,255,255,0.9);
-            padding: 15px;
-            text-align: center;
-            margin-bottom: 20px;
-            border-radius: 10px;
+
+        /* 玻璃质感导航栏 */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 12px 28px;
+            border-radius: 80px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
-        
-        nav a {
-            color: #667eea;
+
+        .glass-nav a {
+            color: #2c6e9e;
             text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 1.05rem;
+            padding: 6px 12px;
+            border-radius: 40px;
+            transition: all 0.2s ease;
+            letter-spacing: 0.3px;
         }
-        
+
+        .glass-nav a:hover {
+            background: #5bcffa20;
+            color: #1f6392;
+            transform: translateY(-1px);
+        }
+
+        /* 通用卡片样式 */
         .card {
             background: white;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-radius: 28px;
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(91, 207, 250, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        
-        .time-display {
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 22px;
+            border-left: 4px solid #5bcffa;
+            padding-left: 18px;
+        }
+
+        .card-header h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #1f4d6e;
+            letter-spacing: -0.2px;
+        }
+
+        /* 时间卡片 */
+        .time-card {
             text-align: center;
-            color: #667eea;
-            font-size: 1.2em;
-            margin-bottom: 10px;
+            background: white;
         }
-        
+
+        .time-icon {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+        }
+
+        .time-label {
+            font-size: 0.9rem;
+            color: #5f8eb0;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        #beijing-time {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #2c6e9e, #5bcffa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+
+        /* 日记条目样式 */
+        .diary-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
         .diary-entry {
-            border-bottom: 1px solid #e0e0e0;
-            padding: 15px 0;
+            display: flex;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid #eef2f8;
+            transition: background 0.2s;
         }
-        
+
+        .diary-entry:last-child {
+            border-bottom: none;
+        }
+
+        .entry-icon {
+            font-size: 1.8rem;
+            flex-shrink: 0;
+            width: 48px;
+            text-align: center;
+            color: #5bcffa;
+        }
+
+        .entry-content {
+            flex: 1;
+        }
+
         .diary-date {
-            color: #888;
-            font-size: 0.9em;
-            margin-bottom: 5px;
+            font-size: 0.75rem;
+            color: #7ea6c2;
+            font-weight: 500;
+            margin-bottom: 6px;
+            display: inline-block;
+            background: #eef6fc;
+            padding: 2px 12px;
+            border-radius: 30px;
+            letter-spacing: 0.3px;
         }
-        
-        .diary-content {
-            color: #333;
+
+        .diary-text {
+            font-size: 1rem;
+            color: #2a4b69;
+            line-height: 1.45;
+            margin-top: 6px;
+        }
+
+        .mood-tag {
+            margin-top: 8px;
+            font-size: 0.7rem;
+            color: #8db3d0;
+            display: flex;
+            gap: 12px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 680px) {
+            body {
+                padding: 16px;
+            }
+            .card {
+                padding: 20px;
+            }
+            .card-header h2 {
+                font-size: 1.4rem;
+            }
+            #beijing-time {
+                font-size: 1.5rem;
+            }
+            .entry-icon {
+                font-size: 1.5rem;
+                width: 36px;
+            }
+            .diary-text {
+                font-size: 0.92rem;
+            }
+            .glass-nav {
+                gap: 20px;
+                padding: 10px 18px;
+            }
+        }
+
+        .footer-note {
+            text-align: center;
+            padding: 20px 10px 10px;
+            color: #6f9bc0;
+            font-size: 0.75rem;
+            border-top: 1px solid rgba(91, 207, 250, 0.3);
+            margin-top: 12px;
+        }
+
+        /* 邮箱链接按钮样式 (保留原交互) */
+        .email-chip {
+            background: #eef2fc;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            color: #2c6e9e;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+        .email-chip:hover {
+            background: #5bcffa;
+            color: white;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <nav>
-            <a href="index.html">首页</a>
-            <a href="diary.html">日常动态</a>
-        </nav>
-        
-        <!-- 时间显示 -->
-        <div class="card">
-            <div class="time-display">
-                现在北京时间：<span id="beijing-time">加载中...</span>
+
+<div class="container">
+    <!-- 导航栏 -->
+    <div class="glass-nav">
+        <a href="index.html">🏠 首页</a>
+        <a href="diary.html" style="background: #eef4fc; color: #1f6392;">📝 日常动态</a>
+    <a href="anime.html">🎀 二次元</a>
+    </div>
+
+    <!-- 北京时间卡片 -->
+    <div class="card time-card">
+        <div class="time-icon">⏰ 🕊️</div>
+        <div class="time-label">现在 · 北京时间</div>
+        <div id="beijing-time">加载中...</div>
+        <div style="font-size: 0.7rem; margin-top: 10px; color: #8bb3cf;">✨TIME ✨</div>
+    </div>
+
+    <!-- 日常动态卡片 -->
+    <div class="card">
+        <div class="card-header">
+            <h2>📖 日常碎碎念</h2>
+        </div>
+        <div class="diary-list">
+            <div class="diary-entry">
+                <div class="entry-icon">🎮</div>
+                <div class="entry-content">
+                    <div class="diary-date">2026-04-02 10:30</div>
+                    <div class="diary-text">昨天和新朋友打了CS!!! 今天顺便更新一下个人主页，然后昨晚好像做梦哭了...?</div>
+                    <div class="mood-tag">#开黑快乐 #深夜emo</div>
+                </div>
+            </div>
+            <div class="diary-entry">
+                <div class="entry-icon">💻</div>
+                <div class="entry-content">
+                    <div class="diary-date">2026-04-01 08:38</div>
+                    <div class="diary-text">今天想完善一下个人网站...我一定要好好学代码qwq...</div>
+                    <div class="mood-tag">#html学习 #编程</div>
+                </div>
+            </div>
+            <div class="diary-entry">
+                <div class="entry-icon">🌙</div>
+                <div class="entry-content">
+                    <div class="diary-date">2026-03-31 23:15</div>
+                    <div class="diary-text">emo状态...</div>
+                    <div class="mood-tag">#抱抱自己</div>
+                </div>
+            </div>
+            <div class="diary-entry">
+                <div class="entry-icon">🍟</div>
+                <div class="entry-content">
+                    <div class="diary-date">2026-03-30 14:20</div>
+                    <div class="diary-text">吃了薯条，薯条脑袋满足！！！</div>
+                    <div class="mood-tag">#薯条脑袋 #碳水快乐</div>
+                </div>
             </div>
         </div>
-        
-        <!-- 日常动态 -->
-        <div class="card">
-            <h2 style="color: #667eea; margin-bottom: 20px;">日常动态</h2>
-            
-            <div class="diary-entry">
-                <div class="diary-date">2026-04-02 10:30</div>
-                <div class="diary-content">昨天和新朋友打了CS!!! 今天顺便更新一下个人主页，然后昨晚好像做梦哭了...?</div>
-            </div>
-
-            <div class="diary-entry">
-                <div class="diary-date">2026-04-01 08:38</div>
-                <div class="diary-content">今天想完善一下个人网站...我一定要好好学代码qwq...</div>
-            </div>
-            
-            <div class="diary-entry">
-                <div class="diary-date">2026-03-31 23:15</div>
-                <div class="diary-content">emo状态...</div>
-            </div>
-            
-            <div class="diary-entry">
-                <div class="diary-date">2026-03-30 14:20</div>
-                <div class="diary-content">吃了薯条，薯条脑袋满足！！！</div>
-            </div>
+        <div style="margin-top: 20px; text-align: right; font-size: 0.7rem; color: #9bbdd6;">
+            🌸 随时更新 · 羽汐的日常碎片
         </div>
     </div>
-    
-    <script>
-        function updateTime() {
-            // 获取北京时间（UTC+8）
-            const now = new Date();
-            const beijingTime = now.toLocaleString('zh-CN', {
-                timeZone: 'Asia/Shanghai',
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            });
-            
-            document.getElementById('beijing-time').textContent = beijingTime;
+
+    <!-- 底部联系卡片：约歌/开黑 指向个人邮箱（请替换为真实邮箱） -->
+    <div class="card" style="background: #fafeff;">
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 1.8rem;">💬</span>
+                <span style="color: #2c6e9e; font-weight: 500;">想和羽汐一起打游戏/听歌吗？</span>
+            </div>
+            <div style="display: flex; gap: 12px;">
+                <!-- 约歌链接：指向邮箱，可自定义邮件主题和内容 -->
+                <a href="mailto:nzmsoso1@gmail.com?subject=想和羽汐一起听歌~&body=嗨羽汐！想约你一起听歌/联机打游戏～" class="email-chip">
+                    🎧 约歌
+                </a>
+                <!-- 开黑链接：同样指向邮箱 -->
+                <a href="mailto:nzmsoso1@gmail.com?subject=约开黑！&body=羽汐好呀！有空一起CS/瓦/Phigros嘛？" class="email-chip">
+                    🕹️ 开黑
+                </a>
+            </div>
+        </div>
+        <!-- 提示更换邮箱 -->
+        <div style="font-size: 0.65rem; color: #9cb9d4; margin-top: 12px; text-align: center;">
+            💡 快来找我玩qwq
+        </div>
+    </div>
+</div>
+
+<div class="footer-note">
+    🌊 羽汐·日常空间 💙🤍
+</div>
+
+<script>
+    function updateBeijingTime() {
+        const now = new Date();
+        const beijingTimeStr = now.toLocaleString('zh-CN', {
+            timeZone: 'Asia/Shanghai',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+        const timeElement = document.getElementById('beijing-time');
+        if (timeElement) {
+            timeElement.textContent = beijingTimeStr;
         }
-        
-        // 每秒更新
-        updateTime();
-        setInterval(updateTime, 1000);
-    </script>
+    }
+    updateBeijingTime();
+    setInterval(updateBeijingTime, 1000);
+</script>
+
 </body>
 </html>
