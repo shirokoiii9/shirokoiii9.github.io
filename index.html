@@ -1,115 +1,393 @@
-<body>
-    <!-- 导航栏 -->
-    <nav style="background: rgba(255,255,255,0.9); padding: 15px; text-align: center; margin-bottom: 20px; border-radius: 10px;">
-        <a href="index.html" style="color: #667eea; text-decoration: none; margin: 0 15px; font-weight: bold;">首页</a>
-        <a href="diary.html" style="color: #667eea; text-decoration: none; margin: 0 15px; font-weight: bold;">日常动态</a>
-    </nav>
-    
-    <div class="container">
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>羽汐的个人website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>羽汐 · 二次元小窝 | 蓝白社交空间</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
+            /* 主色调：5bcffa 蓝色 + ffffff 白色 (清爽社交风) */
+            background: linear-gradient(135deg, #5bcffa 0%, #ffffff 85%);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #333;
-            line-height: 1.6;
+            color: #1f2f3a;
+            line-height: 1.5;
         }
-        
+
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 20px 24px 48px;
         }
-        
-        .header {
-            text-align: center;
-            padding: 40px 20px;
-            color: white;
+
+        /* 玻璃质感导航栏 (删除了约玩组队和留言板，加入二次元) */
+        .social-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 12px 28px;
+            border-radius: 80px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(255,255,255,0.6);
         }
-        
-        .header h1 {
-            font-size: 2em;
-            margin-bottom: 10px;
+
+        .social-nav a {
+            color: #2c6e9e;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            padding: 6px 12px;
+            border-radius: 40px;
+            transition: all 0.2s ease;
+            letter-spacing: 0.3px;
         }
-        
-        .card {
+
+        .social-nav a:hover {
+            background: #5bcffa20;
+            color: #1f6392;
+            transform: translateY(-1px);
+        }
+
+        /* 主要社交资料卡片 */
+        .profile-hero {
             background: white;
-            border-radius: 15px;
-            padding: 25px;
+            border-radius: 32px;
+            padding: 28px 30px;
+            margin-bottom: 28px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+            border: 1px solid rgba(91, 207, 250, 0.2);
+        }
+
+        .hero-flex {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .avatar-area {
+            flex-shrink: 0;
+        }
+
+        .avatar-circle {
+            width: 96px;
+            height: 96px;
+            background: linear-gradient(145deg, #5bcffa, #9ad8fc);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            box-shadow: 0 8px 18px rgba(91,207,250,0.3);
+        }
+
+        .hero-info {
+            flex: 1;
+        }
+
+        .hero-info h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #2c6e9e, #5bcffa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .hero-tagline {
+            color: #5f7f9c;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .pronounce-badge {
+            background: #eef6fc;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            color: #2c6e9e;
+            font-weight: 500;
+        }
+
+        .social-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .social-btn {
+            background: #f0f7fe;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #2c6e9e;
+            text-decoration: none;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid #cde6f5;
+        }
+
+        .social-btn:hover {
+            background: #5bcffa;
+            color: white;
+            border-color: #5bcffa;
+            transform: translateY(-2px);
+        }
+
+        /* 通用卡片样式 */
+        .social-card {
+            background: white;
+            border-radius: 28px;
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(91, 207, 250, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             margin-bottom: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-left: 4px solid #5bcffa;
+            padding-left: 16px;
         }
-        
-        .section-title {
-            font-size: 1.2em;
-            color: #667eea;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e0e0e0;
+
+        .card-header h3 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: #1f4d6e;
         }
-        
-        p {
-            margin-bottom: 10px;
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 12px 20px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #2c6e9e;
+            min-width: 85px;
+            font-size: 0.9rem;
+        }
+
+        .info-value {
+            color: #2c3e44;
+            font-size: 0.95rem;
+        }
+
+        .hobby-tag {
+            background: #eef2fa;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: #2a5a7a;
+        }
+
+        .status-mood {
+            background: #fef7e0;
+            padding: 12px 18px;
+            border-radius: 24px;
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: #ad7a2c;
+        }
+
+        .feed-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid #e9f0f5;
+        }
+
+        .feed-icon {
+            font-size: 1.6rem;
+        }
+
+        .feed-text {
+            font-size: 0.9rem;
+            color: #2b4f6c;
+        }
+
+        .feed-time {
+            font-size: 0.7rem;
+            color: #87b1cf;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 680px) {
+            .container {
+                padding: 16px;
+            }
+            .social-card {
+                padding: 20px;
+            }
+            .hero-flex {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>羽汐的个人website</h1>
-            <p>虽然它很简陋...</p>
+
+<div class="container">
+    <!-- 导航栏：删除“约玩组队”和“留言板”，新增“二次元” -->
+    <div class="social-nav">
+        <a href="index.html">🏠 首页</a>
+        <a href="diary.html">📝 日常动态</a>
+        <a href="anime.html">✨ 二次元</a>
+    </div>
+
+    <!-- 社交个人资料区 -->
+    <div class="profile-hero">
+        <div class="hero-flex">
+            <div class="avatar-area">
+                <div class="avatar-circle">
+                    <span>🌸</span>
+                </div>
+            </div>
+            <div class="hero-info">
+                <h1>羽汐 ✨</h1>
+                <div class="hero-tagline">
+                    <span>⚡ 电竞少女 · mtf/xyn</span>
+                    <span class="pronounce-badge">她/her</span>
+                    <span>🎮 薯条脑袋</span>
+                </div>
+                <div class="social-buttons">
+                    <a href="#" class="social-btn">🎧 一起听歌</a>
+                    <a href="#" class="social-btn">🕹️ 组队游戏</a>
+                    <a href="#" class="social-btn">💌 悄悄话</a>
+                </div>
+            </div>
         </div>
-        
-        <div class="card">
-            <p>Hey! 我是羽汐......一只mtf/xyn....</p>
-        </div>
-        
-        <div class="card">
-            <div class="section-title">个人信息</div>
-            <p>姓名：羽汐</p>
-            <p>性别：mtf</p>
-            <p>属性：药娘</p>
-            <p>年龄：22</p>
-            <p>身高：约167cm</p>
-            <p>体重：约57kg</p>
-            <p>个人特质：电竞少女！</p>
-            <p>喜欢的颜色：蓝色，粉色，白色（这不就是蓝粉白嘛...轻声：其实黑色也不错比较百搭qwq），当然还有水色系！！！</p>
-            <p>恋爱关系：单身qwq</p>
-            <p>性格特点：INFP-T型人格</p>
-        </div>
-        
-        <div class="card">
-            <div class="section-title">其他</div>
-            <p>希望被别人称呼的人称代词：她</p>
-            <p>爱吃的东西：鸡肉叻沙（之前自己总去的一家店），关东煮，汉堡，薯条！！（咱是薯条脑袋！！！）寿司，咖喱饭，不加糖的美式咖啡</p>
-        </div>
-        
-        <div class="card">
-            <div class="section-title">爱好</div>
-            <p>爱好：音乐，游戏，动漫</p>
-            <p>喜欢听歌。</p>
-            <p>喜欢打游戏（可以找咱一起打游戏！！）CS什么的都可以！！ 二游和音游也是玩的qwq，比如Phigros和PJSK，还有蔚蓝档案等等</p>
-            <p>喜欢砂狼白子（感觉性格很像自己）</p>
-        </div>
-        
-        <div class="card">
-            <div class="section-title">精神状态</div>
-            <p>其实不是很好qwq</p>
+        <div style="margin-top: 20px; background: #F5F9FE; border-radius: 20px; padding: 12px 16px;">
+            <p style="margin-bottom: 0; color:#3b6e94;">✨ “Hey! 我是羽汐......一只mtf/xyn....” 喜欢蓝色、粉色、白色，也爱水色系～ 一起打游戏嘛？</p>
         </div>
     </div>
+
+    <!-- 个人信息卡片（完整保留） -->
+    <div class="social-card">
+        <div class="card-header">
+            <h3>📋 羽汐的小档案</h3>
+        </div>
+        <div class="info-grid">
+            <div class="info-item"><span class="info-label">姓名：</span><span class="info-value">羽汐</span></div>
+            <div class="info-item"><span class="info-label">性别：</span><span class="info-value">mtf</span></div>
+            <div class="info-item"><span class="info-label">属性：</span><span class="info-value">药娘</span></div>
+            <div class="info-item"><span class="info-label">年龄：</span><span class="info-value">22</span></div>
+            <div class="info-item"><span class="info-label">身高：</span><span class="info-value">约167cm</span></div>
+            <div class="info-item"><span class="info-label">体重：</span><span class="info-value">约57kg</span></div>
+            <div class="info-item"><span class="info-label">个人特质：</span><span class="info-value">电竞少女！</span></div>
+            <div class="info-item"><span class="info-label">喜欢的颜色：</span><span class="info-value">蓝色，粉色，白色（这不就是蓝粉白嘛...轻声：其实黑色也不错比较百搭qwq），当然还有水色系！！！</span></div>
+            <div class="info-item"><span class="info-label">恋爱关系：</span><span class="info-value">单身qwq</span></div>
+            <div class="info-item"><span class="info-label">性格特点：</span><span class="info-value">INFP-T型人格</span></div>
+        </div>
+    </div>
+
+    <!-- 其他 & 爱吃的东西 -->
+    <div class="social-card">
+        <div class="card-header">
+            <h3>🍜 日常碎片 · 喜好</h3>
+        </div>
+        <div class="info-item" style="margin-bottom: 14px;"><span class="info-label">人称代词：</span><span class="info-value">她</span></div>
+        <div class="info-item" style="margin-bottom: 8px;"><span class="info-label">🍽️ 爱吃的东西：</span><span class="info-value">鸡肉叻沙（之前自己总去的一家店），关东煮，汉堡，薯条！！（咱是薯条脑袋！！！）寿司，咖喱饭，不加糖的美式咖啡</span></div>
+    </div>
+
+    <!-- 爱好专区 -->
+    <div class="social-card">
+        <div class="card-header">
+            <h3>🎵 音乐 · 游戏 · 动漫</h3>
+        </div>
+        <div class="info-item" style="margin-bottom: 12px;"><span class="info-label">🎧 爱好：</span><span class="info-value">音乐，游戏，动漫</span></div>
+        <div class="info-item" style="margin-bottom: 8px;"><span class="info-label">🎮 游戏日常：</span><span class="info-value">喜欢打游戏（可以找咱一起打游戏！！）CS什么的都可以！！ 二游和音游也是玩的qwq，比如Phigros和PJSK，还有蔚蓝档案等等</span></div>
+        <div class="info-item" style="margin-bottom: 8px;"><span class="info-label">🎶 听歌：</span><span class="info-value">喜欢听歌。</span></div>
+        <div class="info-item"><span class="info-label">🐺 推し：</span><span class="info-value">喜欢砂狼白子（感觉性格很像自己）</span></div>
+        <div style="margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px;">
+            <span class="hobby-tag">#Phigros</span>
+            <span class="hobby-tag">#PJSK</span>
+            <span class="hobby-tag">#蔚蓝档案</span>
+            <span class="hobby-tag">#CS搭子</span>
+            <span class="hobby-tag">#音游玩家</span>
+        </div>
+    </div>
+
+    <!-- 精神状态卡片 -->
+    <div class="social-card">
+        <div class="card-header">
+            <h3>🌙 精神状态 · 真实瞬间</h3>
+        </div>
+        <p style="margin-bottom: 6px; font-size: 1rem;">其实不是很好qwq</p>
+        <div class="status-mood">
+            💭 有时候电量低，但依然在努力发光 | 欢迎找我聊天打游戏
+        </div>
+    </div>
+
+    <!-- 社交动态板块 -->
+    <div class="social-card">
+        <div class="card-header">
+            <h3>✨ 羽汐の近况 · 随时开黑</h3>
+        </div>
+        <div class="feed-item">
+            <div class="feed-icon">🎮</div>
+            <div class="feed-text">
+                <strong>在线蹲游戏搭子~</strong> CS2 / 瓦 / 或者一起玩Phigros！私信约起来～
+                <div class="feed-time">🕒 刚刚更新</div>
+            </div>
+        </div>
+        <div class="feed-item">
+            <div class="feed-icon">🎧</div>
+            <div class="feed-text">
+                <strong>今日歌单：</strong> 最近循环“群青”和夜鹿，求推荐好听的术力口～
+                <div class="feed-time">昨天 21:30</div>
+            </div>
+        </div>
+        <div class="feed-item">
+            <div class="feed-icon">🌸</div>
+            <div class="feed-text">
+                <strong>心情笔记：</strong> 喜欢水色系天空，想找个一起逛漫展/联机的小伙伴！
+                <div class="feed-time">2025.04.07</div>
+            </div>
+        </div>
+        <div style="margin-top: 12px; text-align: right;">
+            <span style="background:#eef2fc; padding:4px 12px; border-radius:40px; font-size:12px; color:#2c6e9e;">💬 互动区开放中 · 一起做游戏好友</span>
+        </div>
+    </div>
+</div>
+
+<!-- 底部 -->
+<div style="text-align: center; padding: 20px 10px 30px; color: #6f9bc0; font-size: 13px; border-top: 1px solid rgba(91,207,250,0.3); margin-top: 10px;">
+    🌊 蓝白·二次元小窝 | 欢迎来找羽汐玩 💙🤍
+</div>
 </body>
 </html>
-    </div>
-</body>
